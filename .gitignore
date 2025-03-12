@@ -1,0 +1,12 @@
+ 
+/labels/
+/dicom series/
+/models/
+/obj model/
+/png series/
+/models_left_tooth/
+*.npz
+*.ply
+*.pth
+.log
+*.obj
