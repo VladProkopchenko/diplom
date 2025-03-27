@@ -10,6 +10,8 @@ from model_vizualizer import create_vtk_image_data
 from model_vizualizer import reduce_polygons
 from model_vizualizer import visualize
 from model_vizualizer import save_as_obj
+from model_vizualizer import smooth_model
+from model_vizualizer import remove_small_components
 import os
 
 
@@ -56,15 +58,15 @@ def main():
     glx2dicom(src_dir, dicom_directory, dicom_attrs)
     
     process_files(file_list,dicom_directory, png_directory)
-    
     volume = load_png_series(png_directory)
     print(volume.shape)
-
-    spacing = (1, 1, 1)
+    spacing = (1, 1, 0.85)
     vtk_data = create_vtk_image_data(volume, spacing)
     print(vtk_data.GetDimensions()) 
 
-    model = create_3d_model(vtk_data)
+    model = create_3d_model(vtk_data,70)
+    model = smooth_model(model)
+    model = remove_small_components(model)
 
     reduced_model = reduce_polygons(model, reduction_factor=0.5)
 

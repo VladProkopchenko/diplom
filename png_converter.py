@@ -7,7 +7,6 @@ brightness_factor = 1.1
 contrast_factor = 1.1  
 
 def clear_output_folder(output_folder):
-    """Удаляет все файлы из папки вывода перед началом обработки."""
     if os.path.exists(output_folder):
         for file in os.listdir(output_folder):
             file_path = os.path.join(output_folder, file)
@@ -20,14 +19,8 @@ def clear_output_folder(output_folder):
 def process_files(file_list, input_folder, output_folder):
     # Очищаем папку перед началом
     clear_output_folder(output_folder)
-    
-    total_files = len(file_list)
-    trim_size = total_files // 7  # Определяем, сколько файлов отбросить с начала и конца
 
-    # Берем файлы, исключая 2 части сверху и 2 снизу
-    trimmed_file_list = file_list[trim_size * 2:-trim_size * 2]
-
-    for filename in trimmed_file_list:
+    for filename in file_list:
         dicom_path = os.path.join(input_folder, filename)
         x = dicom.dcmread(dicom_path)
         img_array = x.pixel_array
